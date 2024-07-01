@@ -400,9 +400,89 @@ sns.boxplot(x = 'converted', y = 'total ads', data = df[df['total ads']<50], pal
 
 ```
 
-4. **Statistical Tests**
-   - Conducting hypothesis tests (e.g., t-tests, Mann-Whitney U tests) to assess the significance of observed differences.
-   - Interpreting p-values and making conclusions based on statistical significance.
+#### 4. Statistical Tests
+
+- **Chi-Square Tests for Categorical Variables**
+  - Conducted Chi-Square tests to examine the dependency between categorical variables and conversion status.
+  - Created contingency tables (cross-tabulations) for each categorical variable against the conversion status.
+  - Performed Chi-Square tests on these contingency tables.
+  - Evaluated the p-values to determine the statistical significance of the relationships.
+
+- **Findings:**
+  - **Test Group:**
+    - The p-value was extremely close to zero, indicating that the difference in conversion rates across `test group` is statistically significant.
+    - **Objective 4 Answered**: Compared conversion rates between the users exposed to ads and those in the control group (PSA), and determined a significant difference.
+  - **Most Ads Day:**
+    - The p-value was extremely close to zero, suggesting that the difference in conversion rates across `most ads day` is statistically significant.
+    - **Objective 3 Answered**: Assessed that conversion rates do vary significantly based on the day of ad exposure.
+  - **Most Ads Hour:**
+    - The p-value was extremely close to zero, suggesting that the difference in conversion rates across `most ads hour` is statistically significant.
+    - **Objective 3 Answered**: Assessed that conversion rates do vary significantly based on the hour of ad exposure. 
+
+- **Tests for Continuous Variable (Total Ads)**
+  - **Check Assumptions**:
+    - Conducted Shapiro-Wilk tests for normality on the `total ads` variable for both converted and non-converted groups.
+    - Conducted Levene's test for equality of variances between the two groups.
+  - **Perform Suitable Test**:
+    - If assumptions of normality and equality of variances were met, performed a t-test for means.
+    - If assumptions were not met, performed a Mann-Whitney U test for medians (nonparametric).
+
+- **Findings:**
+  - The Shapiro-Wilk test for normality returned p-values of 0.0 and 0.0 for the converted and non-converted groups, respectively, indicating non-normality of the `total ads` distribution within both groups.
+  - Levene's test for equality of variances returned a p-value of 0.0, suggesting that the variances of `total ads` between the converted and non-converted groups are significantly different.
+  - Since the assumptions for parametric tests were not met, a Mann-Whitney U test was performed. The resulting p-value was 0.0, indicating a significant difference in median `total ads` between users who converted and those who did not. This suggests that the number of ads seen influences conversion likelihood, as users who converted were exposed to a significantly different median number of ads compared to those who did not.
+  - **Objective 5 Answered**: Explored how the number of ads seen influenced conversion likelihood.
+
+```python
+#Chi-Square Tests for Categorical Variables
+from scipy.stats import chi2_contingency
+
+alpha = 0.05
+for variable in df_cat.columns:
+    if variable != 'converted':  # Don't want to see converted relationship with itself
+        #Create a contingency table (cross-tabulation)
+        contingency_table = pd.crosstab(df_cat[variable], df_cat['converted'])
+
+        #Perform Chi-Square test
+        chi2, p, _, _ = chi2_contingency(contingency_table)
+
+        #Display the results
+        print(f"\nChi-Squared test for {variable} vs. converted:")
+        print(f"Chi-Squared value: {chi2}")
+        print(f"p-value: {p}")
+
+        #Check for significance
+        if p < alpha:
+            print(f"The difference in conversion rates across {variable} is statistically significant.")
+        else:
+            print(f"There is no significant difference in conversion rates across {variable}.")
+
+#Tests for Continuous Variable (Total Ads)
+from scipy.stats import shapiro, levene, ttest_ind, mannwhitneyu
+
+#Shapiro-Wilk test for normality
+shapiro_stat_true, shapiro_p_value_true = shapiro(df[df['converted'] == True]['total ads'])
+shapiro_stat_false, shapiro_p_value_false = shapiro(df[df['converted'] == False]['total ads'])
+
+print(f"Shapiro-Wilk test for normality (True group): p-value = {shapiro_p_value_true}")
+print(f"Shapiro-Wilk test for normality (False group): p-value = {shapiro_p_value_false}")
+
+#Levene's test for equality of variances
+levene_stat, levene_p_value = levene(df[df['converted']]['total ads'], df[~df['converted']]['total ads'])
+print(f"Levene's test for equality of variances: p-value = {levene_p_value}")
+
+#Perform suitable test based on assumptions
+alpha = 0.05
+
+if shapiro_p_value_true > alpha and shapiro_p_value_false > alpha and levene_p_value > alpha:
+    #Assumptions met - use t-test for means
+    t_stat, t_p_value = ttest_ind(df[df['converted']]['total ads'], df[~df['converted']]['total ads'])
+    print(f"Independent two-sample t-test: p-value = {t_p_value}")
+else:
+    #Assumptions not met - use Mann-Whitney U test for medians (nonparametric)
+    u_stat, u_p_value = mannwhitneyu(df[df['converted']]['total ads'], df[~df['converted']]['total ads'])
+    print(f"Mann-Whitney U test: p-value = {u_p_value}")
+```
 
 5. **Simulated Revenue Analysis**
    - **Data Modification:**

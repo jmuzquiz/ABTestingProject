@@ -299,6 +299,7 @@ plt.show()
    - **Test Group vs Converted**: 
      - Investigated the relationship between `test group` and `converted`.
      - Normalized a crosstab to show percentages. Among users exposed to the ad, 2.55% made a purchase, while among those exposed to the PSA, only 1.79% converted.
+     - **Objective 4 Answered**: Compared conversion rates between users exposed to ads and those in the control group (PSA).
        
        | Test Group | Not Converted   | Converted      |
          |--------------|---------|-----------|
@@ -310,6 +311,7 @@ plt.show()
    - **Most Ads Day vs Converted**: 
      - Investigated the relationship between `most ads day` and `converted`.
      - Created a crosstab and normalized it to show percentages. Monday showed the highest conversion rate at 3.28%.
+     - **Objective 2 Answered**: Determined the day of the week with the highest conversion rate.
 
          | Most Ads Day | Not Converted   | Converted      |
          |--------------|---------|-----------|
@@ -326,6 +328,7 @@ plt.show()
    - **Most Ads Hour vs Converted**: 
      - Investigated the relationship between `most ads hour` and `converted`.
      - Created a crosstab and normalized it to show percentages. 4pm had the highest conversion rate at 3.08%.
+     - **Objective 2 Answered**: Determined the time of day with the highest conversion rate.
        
        | Most Ads Hour | Not Converted   | Converted      |
          |--------------|---------|-----------|
@@ -358,27 +361,50 @@ plt.show()
 
    - **Total Ads vs Converted**: 
      - Investigated the relationship between `total ads` and `converted`.
-     - Created a boxplot to compare distributions. Filtered for ads less than 50 due to visualization issues identified earlier. For users who converted, the median number of ads seen was around 25, compared to 10 for those who did not convert.
+     - Created a boxplot to compare distributions. Filtered for ads less than 50 due to visualization issues identified earlier. For users who converted, the median number of ads seen was around 25, compared to 10 for those who did not convert. Repeated targetting seems to be helping with conversion rates.
+     - **Objective 5 Answered**: Explored how the number of ads seen influenced conversion likelihood.
        #### Original Visualization
        ![Total Ads vs Converted Box Plot](Graphs/boxplot_total_ads_converted.png)
        #### Refined Visualization (less than 50 ads):
        ![Total Ads vs Converted Filtered Box Plot](Graphs/boxplot_total_ads_converted_filtered.png)
 
+```python
+#bivariate analysis
 
+#test group vs converted
+#comparing two categorical variables
+#also normalized them
+ct_conversion_test_group = pd.crosstab(df['test group'], df['converted'], normalize = 'index')
+ct_conversion_test_group
+#visualizing above
+ct_conversion_test_group.plot.bar(stacked = True);
 
-   - i Investigated the relationships between `converted` and the other variables.
-   - i made a crosstab of test group and converted and normalized them (show table and/or graphs). of those who had seen the add, 2.55% purchased. of those who had only seen the psa, only 1.78% converted/purchased the product.
-   - i made a crosstab of most ads day and converted and normalized them (why should we normalize them?) (show visuals). Monday had the maximum conversions at 3.28%.
-   - i made a crosstab of most ads hour (what is a crosstab? why use to compare two categorical variables?) (show visuals). 4pm was the hour with the maximum conversion rate at 3.08%.
-   - i then made a boxplot of total ads vs converted. due to unclear visuals again, i filtered for ads less than 50. for people who have purchased/converted, the median number of ads they have seen is around 25 according to boxplot. for people who have not purchased, the median they have seen is 10. repeated targetting seems to be helping.
-   - Investigating relationships between `converted` and other variables.
-   - Analyzing how variables like `test group` or `total ads` relate to conversion rates.
+#most ads day vs converted
+ct_conversion_day = pd.crosstab(df['most ads day'], df['converted'], normalize = 'index')
+print(ct_conversion_day.sort_values(by = True, ascending = False))
+ct_conversion_day.plot.bar(stacked = True);
+plt.tight_layout()
 
-5. **Statistical Tests**
+#most ads hour vs converted
+ct_conversion_hour = pd.crosstab(df['most ads hour'], df['converted'], normalize = 'index')
+print(ct_conversion_hour.sort_values(by = True, ascending = False))
+ct_conversion_hour.plot.bar(stacked = True);
+
+#total ads vs converted
+sns.boxplot(x = 'converted', y = 'total ads', data = df);
+
+#total ads less than 50 vs converted
+#define the custom color palette
+custom_palette = {'True': 'orange', 'False': '#add8e6'}  # Light blue color code
+sns.boxplot(x = 'converted', y = 'total ads', data = df[df['total ads']<50], palette = custom_palette);
+
+```
+
+4. **Statistical Tests**
    - Conducting hypothesis tests (e.g., t-tests, Mann-Whitney U tests) to assess the significance of observed differences.
    - Interpreting p-values and making conclusions based on statistical significance.
 
-6. **Simulated Revenue Analysis**
+5. **Simulated Revenue Analysis**
    - **Data Modification:**
      - Simulating a `simulated_revenue` column based on conversion status and ad exposure.
    - **Univariate Analysis:**

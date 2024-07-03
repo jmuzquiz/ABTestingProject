@@ -9,15 +9,15 @@
 4. [Project Overview](#project-overview)
    - [Objectives](#objectives)
    - [Tools I Used](#tools-i-used)
-1. [Introduction](#introduction)
-2. [Dataset Description](#dataset-description)
-3. [Exploratory Data Analysis (EDA)](#exploratory-data-analysis-eda)
-4. [A/B Testing Analysis](#ab-testing-analysis)
-5. [Results](#results)
-6. [Conclusion](#conclusion)
-7. [Code](#code)
-8. [Dependencies](#dependencies)
-9. [Usage](#usage)
+5. [Project Structure](#project-structure)
+   - [Univariate Analysis](univariate-analysis)
+   - [Bivariate Analysis](bivariate-analysis)
+   - [Statistical Tests](statistical-tests)
+   - [Simulated Revenue Analysis](simulated-revenue-analysis)
+6. [Insights and Interpretations](insights-and-interpretations)
+7. [Conclusion](conclusion)
+8. [Future Steps](future-steps)
+9. [Acknowledgements](acknowledgments)
 
 ## Introduction
 📊 Dive into the world of A/B testing analysis with this project! We're exploring how different user exposures—ads versus PSAs—affect conversion rates and simulated revenue. Join me in analyzing the data to derive meaningful insights that drive strategic business decisions.
@@ -51,8 +51,8 @@ This project focuses on conducting an A/B testing analysis to evaluate the impac
 3. Assess if conversion rates vary significantly based on the day or hour of ad exposure.
 4. Compare conversion rates between users exposed to ads and those in the control group.
 5. Explore how the number of ads seen influences conversion likelihood.
-6. Analyze simulated revenue differences between users who converted and those who did not.
-7. Calculate the total revenue generated from users who converted during the ad campaign.
+6. Analyze simulated revenue differences between users who converted and those who did not, differentiating by test group (ads vs PSA) and varying levels of total ads seen.
+7. Evaluate the overall impact and effectiveness of the ad campaign, comparing revenue from ads versus PSA and examining the relationship between total ads seen and revenue.
 
 ### Tools I Used
 For my A/B testing analysis project, I utilized the following tools and platforms:
@@ -67,7 +67,7 @@ For my A/B testing analysis project, I utilized the following tools and platform
 This project enabled me to leverage my proficiency in Python programming, collaborative tools like Google Colab and GitHub, and essential data analysis and visualization libraries. These tools were instrumental in conducting rigorous A/B testing analysis and deriving meaningful insights from the dataset.
 
 ## Project Structure
-1. **Data Preprocessing**
+1. #### **Data Preprocessing**
    - **Loading the Libraries**: Necessary libraries for data manipulation and analysis were imported.
    - **Loading the Data**: The dataset was loaded from the provided source into a pandas DataFrame.
    - **Dropping Unnecessary Columns**: Dropped the `Unnamed: 0` column as it is just a row index and does not contribute to the analysis. Also dropped the `user id` column after confirming there were no duplicate user IDs.
@@ -104,7 +104,7 @@ for i in df_cat.columns:
   print(i.upper(), ":", df_cat[i].unique()) #gets us column names and the unique values
 ```
 
-2. **Univariate Analysis**
+2. #### **Univariate Analysis**
 
    - **Test Group**: 
      - Created a count plot and pie chart for `test group`.
@@ -294,7 +294,7 @@ plt.tight_layout()
 #show the plots
 plt.show()
 ```
-3. **Bivariate Analysis**
+3. #### **Bivariate Analysis**
 
    - **Test Group vs Converted**: 
      - Investigated the relationship between `test group` and `converted`.
@@ -484,18 +484,230 @@ else:
     print(f"Mann-Whitney U test: p-value = {u_p_value}")
 ```
 
-5. **Simulated Revenue Analysis**
-   - **Data Modification:**
-     - Simulating a `simulated_revenue` column based on conversion status and ad exposure.
-   - **Univariate Analysis:**
-     - Examining the distribution and summary statistics of `simulated_revenue`.
-   - **Bivariate Analysis:**
-     - Exploring relationships between `converted` and `simulated_revenue`.
-     - Analyzing how `simulated_revenue` varies across different factors like `test group` or `total ads`.
-   - **Statistical Tests:**
-     - Performing tests to compare `simulated_revenue` between converted and non-converted groups.
-     - Discussing the implications for potential business decisions.
+#### 5. Simulated Revenue Analysis
 
+- **Data Modification:**
+  - Enhanced A/B testing analysis by integrating revenue simulation to augment the interpretation of data with actionable financial insights.
+  - Implemented a  strategy to simulate revenue, combining a fixed base revenue for conversions and a variable component based on the number of ads seen. Previous analysis has shown that conversion rates vary depending on the type of exposure (ad vs PSA), highlighting the significant impact of ad exposure on conversion likelihood. This method ensured that the new `simulated_revenue` column in the data frame reflected the potential revenue impact of ad exposure.
+  - Calculated total earnings for each group to validate the accuracy of simulated revenue calculations (Total earnings from converted users: $3,974,592.00; Total earnings from non-converted users: $0.00).
+
+- **Univariate Analysis:**
+  - Examined the distribution of `simulated_revenue` with a histogram. The right-skewed distribution shows a significant number of zeros, aligning with the low conversion rate of 2.52%. 
+    ![Histogram of Simulated Revenue](Graphs/simulated_revenue.png) 
+
+- **Bivariate Analysis:**
+  
+   - **Simulated Revenue vs Converted**: 
+     - Investigated the relationship between `simulated_revenue` and `converted` through the creation of a histogram.
+     - Due to skewness, the data was difficult to visualize, so descriptive statistics were examined.
+     - Decided to focus on entries where the simulated revenue was less than $350 for better visualization.
+     - Without these outliers, the average simulated revenue for converted users was $212.
+       #### Original Visualization
+       ![Histogram of Simulated Revenue vs Converted](Graphs/simulated_revenue_converted.png)
+       #### Refined Visualization (Revenue less than $350)
+       ![Histogram of Simulated Revenue vs Converted Filtered](Graphs/simulated_revenue_converted_filtered.png)
+       
+   - **Simulated Revenue vs Test Group**: 
+     - Investigated the relationship between `simulated_revenue` and `test group` through the creation of a boxplot.
+     - Due to a high percentage of zero revenue for both groups, the data was difficult to visualize, so total revenue was calculated for each group instead (Total earnings from PSA (control) group: $111,952; Total earnings from Ad (experimental) group: $3,862,640).
+     - **Objective 7 Answered**: Evaluated the overall impact and effectiveness of the ad campaign by comparing revenue from ads versus PSA groups. Ad exposure clearly generated more revenue, suggesting ad campaign success.
+       ![Boxplot of Simulated Revenue vs Test Group](Graphs/simulated_revenue_test_group.png)
+       
+   - **Simulated Revenue vs Total Ads**: 
+     - Investigated the relationship between `simulated_revenue` and `test group` through the creation of a scatterplot.
+     - Despite a high percentage of zero values, the scatterplot revealed a positive relationship between `total ads` and `simulated_revenue` for non-zero values.
+       ![Scatterplot of Simulated Revenue vs Total Ads](Graphs/simulated_revenue_total_ads.png)
+
+- **Statistical Tests:**
+  - **Simulated Revenue vs. Converted:**
+    - **Assumptions Check:**
+      - Conducted Shapiro-Wilk tests for normality on the `simulated_revenue` variable for both converted and non-converted groups.
+      - Shapiro-Wilk test p-values:
+        - Converted group: p-value = 0.0, indicating non-normality.
+        - Non-converted group: p-value = 1.0, indicating normality.
+      - Conducted Levene's test for equality of variances between the two groups.
+      - Levene's test p-value = 0.0, suggesting significantly different variances.
+    - **Test Performed:**
+      - Due to non-normality in the converted group and differing variances, used Mann-Whitney U test for medians (nonparametric).
+    - **Findings:**
+      - Mann-Whitney U test showed a significant difference in median `simulated_revenue` between converted and non-converted groups (p-value = 0.0).
+      - **Objective 6 Answered**: Analyzed simulated revenue differences between users who converted and those who did not. Conversion significantly impacted simulated revenue, as expected, based on how the revenue was simulated.
+
+  - **Simulated Revenue vs. Test Group (Ad vs PSA):**
+    - **Assumptions Check:**
+      - Conducted Shapiro-Wilk tests for normality.
+      - Conducted Levene's test for equality of variances.
+    - **Test Performed:**
+      - If assumptions met, used t-test for means.
+      - If assumptions not met, used Mann-Whitney U test.
+    - **Findings:**
+      - Shapiro-Wilk tests indicated non-normality (p-values = 0.0).
+      - Levene's test indicated unequal variances (p-value ≈ 0.0).
+      - Mann-Whitney U test showed significant difference in median `simulated_revenue` (p-value ≈ 0.0).
+      - **Objective 6 Answered**: Analyzed simulated revenue differences across test group (ads vs PSA). Ad exposure significantly impacted simulated revenue, as was suggested by the total earnings differences identified in the previous bivariate analysis of `simulated_revenue` vs `test group`.
+
+  - **Simulated Revenue vs. Total Ads Seen:**
+    - **Assumptions Check:**
+      - Conducted Shapiro-Wilk tests for normality.
+      - Both `total ads` and `simulated_revenue` variables showed normal distribution.
+    - **Test Performed:**
+      - Pearson correlation was used to measure the linear relationship.
+    - **Findings:**
+      - Pearson correlation coefficient: 0.357, p-value = 0.000.
+      - This indicates a moderate positive linear relationship between the number of total ads seen and the simulated revenue generated.
+      - **Objective 6 and 7 Answered**: Analyzed simulated revenue differences between varying levels of total ads seen. Increased ad exposure lead to higher simulated revenue, as was suggested by the scatterplot of `simulated_revenue` and `total ads` highlighted in the previous section, and is indicative of ad campaign success.
+
+```python
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Set the figure size for all plots
+plt.figure(figsize=(8, 6))
+
+# Histogram for overall simulated revenue
+plt.hist(df['simulated_revenue'], bins=30, edgecolor='black')
+plt.xlabel('Simulated Revenue')
+plt.ylabel('Frequency')
+plt.title('Distribution of Simulated Revenue (All Users)')
+plt.grid(True)
+plt.show()
+
+# Histogram for simulated revenue by conversion status
+plt.figure(figsize=(8, 6))
+plt.hist(df[df['converted']]['simulated_revenue'], bins=30, alpha=0.5, color='blue', label='Converted')
+plt.hist(df[~df['converted']]['simulated_revenue'], bins=30, alpha=0.5, color='red', label='Not Converted')
+plt.xlabel('Simulated Revenue')
+plt.ylabel('Frequency')
+plt.title('Histogram of Simulated Revenue by Conversion Status')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# Histogram for simulated revenue filtered by conversion status and revenue < 350
+plt.figure(figsize=(8, 6))
+plt.hist(df[(df['simulated_revenue'] < 350) & df['converted']]['simulated_revenue'], bins=30, alpha=0.5, color='blue', label='Converted')
+plt.hist(df[(df['simulated_revenue'] < 350) & ~df['converted']]['simulated_revenue'], bins=30, alpha=0.5, color='red', label='Not Converted')
+# Apply frequency filter
+plt.ylim(0, 1000)
+plt.xlabel('Simulated Revenue')
+plt.ylabel('Frequency')
+plt.title('Distribution of Simulated Revenue (Revenue < 350)')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# Boxplot of simulated revenue by exposure group
+plt.figure(figsize=(8, 6))
+sns.boxplot(x='test group', y='simulated_revenue', data=df, palette=['green', 'orange'])
+plt.xlabel('Test Group')
+plt.ylabel('Simulated Revenue')
+plt.title('Boxplot of Simulated Revenue by Exposure Group')
+plt.grid(True)
+plt.show()
+
+# Scatter plot of total ads vs simulated revenue
+plt.figure(figsize=(8, 6))
+sns.scatterplot(x='total ads', y='simulated_revenue', data=df)
+plt.title('Total Ads vs Simulated Revenue')
+plt.xlabel('Total Ads')
+plt.ylabel('Simulated Revenue')
+plt.grid(True)
+plt.show()
+
+#simulate revenue
+# Set a random seed for reproducibility
+np.random.seed(45)
+
+# Define revenue parameters
+fixed_revenue_per_conversion = 100
+variable_revenue_per_ad = 2
+
+# Calculate simulated_revenue based on conversion status and total ads seen
+df['simulated_revenue'] = df.apply(
+    lambda row: fixed_revenue_per_conversion + (variable_revenue_per_ad * row['total ads']) if row['converted'] else 0,
+    axis=1
+)
+
+# Calculate total earnings based on conversion status
+total_earnings_converted = df[df['converted']]['simulated_revenue'].sum()
+total_earnings_not_converted = df[~df['converted']]['simulated_revenue'].sum()
+
+# Summary of total earnings
+print(f"Total earnings from converted users: ${total_earnings_converted:.2f}")
+print(f"Total earnings from non-converted users: ${total_earnings_not_converted:.2f}")
+
+###statistical tests
+#simulated revenue vs converted
+# Step 1: Check assumptions
+# Normality assumption (Shapiro-Wilk test)
+shapiro_stat_true, shapiro_p_value_true = shapiro(df[df['converted'] == True]['simulated_revenue'])
+shapiro_stat_false, shapiro_p_value_false = shapiro(df[df['converted'] == False]['simulated_revenue'])
+
+print(f"Shapiro-Wilk test for normality (True group): p-value = {shapiro_p_value_true}")
+print(f"Shapiro-Wilk test for normality (False group): p-value = {shapiro_p_value_false}")
+
+# Equality of variances assumption (Levene's test)
+levene_stat, levene_p_value = levene(df[df['converted']]['simulated_revenue'], df[~df['converted']]['simulated_revenue'])
+print(f"Levene's test for equality of variances: p-value = {levene_p_value}")
+
+# Step 2: Perform a suitable test
+alpha = 0.05  # Adjust alpha based on your significance level
+
+if shapiro_p_value_true > alpha and shapiro_p_value_false > alpha and levene_p_value > alpha:
+    # Assumptions met - use t-test for means
+    t_stat, t_p_value = ttest_ind(df[df['converted']]['simulated_revenue'], df[~df['converted']]['simulated_revenue'])
+    print(f"Independent two-sample t-test: p-value = {t_p_value}")
+else:
+    # Assumptions not met - use Mann-Whitney U test for medians (nonparametric)
+    u_stat, u_p_value = mannwhitneyu(df[df['converted']]['simulated_revenue'], df[~df['converted']]['simulated_revenue'])
+    print(f"Mann-Whitney U test: p-value = {u_p_value}")
+
+#simulated revenue vs test group
+# Step 1: Check assumptions
+# Normality assumption (Shapiro-Wilk test)
+shapiro_stat_ad, shapiro_p_value_ad = shapiro(df[df['test group'] == 'ad']['simulated_revenue'])
+shapiro_stat_psa, shapiro_p_value_psa = shapiro(df[df['test group'] == 'psa']['simulated_revenue'])
+
+print(f"Shapiro-Wilk test for normality (ad group): p-value = {shapiro_p_value_ad}")
+print(f"Shapiro-Wilk test for normality (psa group): p-value = {shapiro_p_value_psa}")
+
+# Equality of variances assumption (Levene's test)
+levene_stat, levene_p_value = levene(df[df['test group'] == 'ad']['simulated_revenue'], df[df['test group'] == 'psa']['simulated_revenue'])
+print(f"Levene's test for equality of variances: p-value = {levene_p_value}")
+
+# Step 2: Perform a suitable test
+alpha = 0.05  # Adjust alpha based on your significance level
+
+if shapiro_p_value_ad > alpha and shapiro_p_value_psa > alpha and levene_p_value > alpha:
+    # Assumptions met - use t-test for means
+    t_stat, t_p_value = ttest_ind(df[df['test group'] == 'ad']['simulated_revenue'], df[df['test group'] == 'psa']['simulated_revenue'])
+    print(f"Independent two-sample t-test: p-value = {t_p_value}")
+else:
+    # Assumptions not met - use Mann-Whitney U test for medians (nonparametric)
+    u_stat, u_p_value = mannwhitneyu(df[df['test group'] == 'ad']['simulated_revenue'], df[df['test group'] == 'psa']['simulated_revenue'])
+    print(f"Mann-Whitney U test: p-value = {u_p_value}")
+
+#simulated revenue vs total ads
+from scipy.stats import pearsonr, spearmanr
+
+# Check assumptions for Pearson correlation
+shapiro_p_total_ads, _ = shapiro(df['total ads'])
+shapiro_p_revenue, _ = shapiro(df['simulated_revenue'])
+
+if shapiro_p_total_ads > 0.05 and shapiro_p_revenue > 0.05:
+    # Assumptions met - use Pearson correlation
+    pearson_corr, pearson_p_value = pearsonr(df['total ads'], df['simulated_revenue'])
+    print(f"Pearson correlation coefficient: {pearson_corr:.3f}")
+    print(f"Pearson correlation p-value: {pearson_p_value:.3f}")
+else:
+    # Assumptions not met - use Spearman correlation
+    spearman_corr, spearman_p_value = spearmanr(df['total ads'], df['simulated_revenue'])
+    print(f"Spearman correlation coefficient: {spearman_corr:.3f}")
+    print(f"Spearman correlation p-value: {spearman_p_value:.3f}")
+
+```
+    edit above, change order of simulation and images, label univariate and bivariate, generally clean up spacing and hashtags
+    
 ## Insights and Interpretation
 - Summarize the key findings from both the initial A/B testing analysis and the simulated revenue analysis.
 - Interpret the results in the context of the project's objectives and discuss their theoretical implications for business strategies.
@@ -504,9 +716,31 @@ else:
 - Reflect on the project's goals and what was achieved through the analysis.
 - Discuss any limitations encountered and opportunities for further exploration or refinement.
 
-## Visualizations and Code
-- Include visualizations (e.g., plots, charts) that highlight key insights.
-- Provide snippets of code used for data preprocessing, analysis, and statistical tests.
+
+Business Insights Interpretation
+1. Relationship Between Total Ads Seen and Simulated Revenue
+Based on our analysis, we observed a [strong/weak/moderate] positive correlation between the number of ads seen by users and the simulated revenue generated. The Pearson correlation coefficient of X suggests that as the number of ads seen increases, there is a tendency for simulated revenue to increase as well.
+
+3. Optimization Opportunities
+Ad Exposure Strategy: Given the positive correlation between ad exposure and revenue, optimizing ad delivery to increase user exposure could potentially lead to higher revenue generation. which could inform decisions on ad placement strategies or budget allocation in advertising campaigns.
+
+Targeting Strategies: Understanding how different segments respond to ad exposure can inform targeted marketing strategies. For instance, focusing on high-value segments that show a stronger correlation between ads seen and revenue can optimize marketing ROI.
+
+4. Conversion and Revenue Alignment
+The AB testing results also indicated that users exposed to ads (compared to those exposed to PSA) showed higher conversion rates and, consequently, higher simulated revenue. This alignment reinforces the importance of effective ad campaign management in driving both conversion and revenue outcomes.
+
+limitations: the revenue was simulated, don't have industry standards or company history to compare to, need stuff like this 1. **User Demographics:** Age, gender, location.
+2. **Engagement Metrics:** Number of sessions, session duration.
+3. **Ad Characteristics:** Type of ad, ad placement, ad frequency.
+
+6. Future Considerations
+   multiple linear regression, tests to say how revenue is affected by day of the week or time of day
+Further Testing: Continual testing and iteration of ad exposure strategies are recommended to refine targeting and maximize revenue potential.
+
+Segmentation Strategies: Exploring deeper into user segmentation based on behavior and response to ad exposure can uncover more nuanced insights for personalized marketing approaches.
+
+Conclusion
+In conclusion, optimizing ad exposure based on our findings can lead to significant improvements in revenue generation. By leveraging insights into the relationship between ad exposure and revenue, we can refine our strategies to better meet user expectations and business objectives.
 
 ------
 

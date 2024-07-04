@@ -22,6 +22,29 @@
    - [Future Steps](future-steps)
 8. [Acknowledgements](acknowledgments)
 
+## Table of Contents
+- [Introduction](#introduction)
+- [Background](#background)
+  - [Dataset Source](#dataset-source)
+  - [Dataset Description](#dataset-description)
+  - [Google Colab Notebook](#google-colab-notebook)
+  - [Project Overview](#project-overview)
+    - [Objectives](#objectives)
+    - [Statistical Tools](#statistical-tools)
+  - [Project Structure](#project-structure)
+    - [Data Preprocessing](#data-preprocessing)
+    - [Univariate Analysis](#univariate-analysis)
+    - [Bivariate Analysis](#bivariate-analysis)
+    - [Statistical Tests](#statistical-tests)
+    - [Simulated Revenue Analysis](#simulated-revenue-analysis)
+  - [Insights and Interpretations](#insights-and-interpretations)
+  - [Conclusion](#conclusion)
+    - [Project Goals](#project-goals)
+    - [Limitations](#limitations)
+    - [Future Steps](#future-steps)
+  - [Acknowledgements](#acknowledgements)
+
+
 ## Introduction
 📊 Dive into the world of A/B testing analysis with this project! We're exploring how different user exposures—ads versus PSAs—affect conversion rates and simulated revenue. Join me in analyzing the data to derive meaningful insights that drive strategic business decisions.
 

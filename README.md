@@ -16,15 +16,17 @@
    - [Simulated Revenue Analysis](simulated-revenue-analysis)
 6. [Insights and Interpretations](insights-and-interpretations)
 7. [Conclusion](conclusion)
-8. [Future Steps](future-steps)
-9. [Acknowledgements](acknowledgments)
+   - [Project Goals](project-goals)
+   - [Limitations](limitations)
+   - [Future Steps](future-steps)
+8. [Acknowledgements](acknowledgments)
 
 ## Introduction
 📊 Dive into the world of A/B testing analysis with this project! We're exploring how different user exposures—ads versus PSAs—affect conversion rates and simulated revenue. Join me in analyzing the data to derive meaningful insights that drive strategic business decisions.
 
 ## Background
 ### Dataset Source
-The dataset used in this project was sourced from Kaggle link*. It comprises data related to a marketing A/B testing scenario aimed at evaluating the effectiveness of advertising campaigns. A majority of the people in the sample were exposed to ads (the experimental group). And a small portion of people (the control group) instead saw a Public Service Announcement (PSA) in the exact size and place the ad would normally be. 
+The dataset used in this project was sourced from [Kaggle](https://www.kaggle.com/datasets/faviovaz/marketing-ab-testing). It comprises data related to a marketing A/B testing scenario aimed at evaluating the effectiveness of advertising campaigns. A majority of the people in the sample were exposed to ads (the experimental group), while a small portion of people (the control group) instead saw a Public Service Announcement (PSA) in the exact size and place the ad would normally be. 
 
 ### Dataset Description
 The dataset contains the following columns:
@@ -38,7 +40,7 @@ The dataset contains the following columns:
 
 ## Google Colab Notebook
 
-This notebook contains the Python code used for the A/B testing analysis in this project. Click [here](link-to-your-notebook-file)* to view the notebook.
+This [notebook](https://colab.research.google.com/drive/1muq9hceFyo-QxPNSdx73RmRMHxetpAIe?usp=drive_link) contains the Python code used for the A/B testing analysis in this project. 
 
 The notebook includes data preprocessing steps, visualizations, statistical analysis, and simulations related to evaluating the effectiveness of advertising campaigns using A/B testing.
 
@@ -707,100 +709,47 @@ else:
 
 ```
     edit above, change order of simulation and images, label univariate and bivariate, generally clean up spacing and hashtags
-    
+
 ## Insights and Interpretation
-- Summarize the key findings from both the initial A/B testing analysis and the simulated revenue analysis.
-- Interpret the results in the context of the project's objectives and discuss their theoretical implications for business strategies.
+
+Based on the results of the A/B testing analysis, several key insights were uncovered that can guide strategic business decisions:
+
+1. **Peak Ad Exposure Times**: The analysis identified specific days and hours when ad exposure peaked. These time frames should be targeted for future ad campaigns to maximize user engagement and conversion rates.
+   
+2. **Conversion Rates by Time**: Conversion rates were found to vary significantly depending on the day of the week and time of day. Targeting ads during these high-conversion periods can increase the overall conversion rate.
+
+3. **Impact of Ad Exposure on Conversion**: Users exposed to ads had significantly higher conversion rates compared to the control group (PSA). This suggests that ad exposure effectively drives user conversions, highlighting the importance of maintaining or increasing ad frequency during campaigns.
+
+4. **Effect of Ad Frequency on Conversion Likelihood**: A positive relationship was found between the number of ads seen and conversion likelihood. Therefore, increasing the frequency of ad exposure could potentially lead to higher conversion rates, although this should be balanced against the risk of ad fatigue.
+
+5. **Simulated Revenue Analysis**: Significant differences in simulated revenue were observed between users who converted and those who did not, as well as between different test groups (ads vs PSA). Users exposed to ads generated higher revenue, suggesting that ad exposure not only drives conversions but also contributes to higher revenue generation. This information can help businesses make informed decisions on ad placement strategies and budget allocation in advertising campaigns.
+
+6. **Total Ads and Revenue**: A moderate positive linear relationship was found between the total number of ads seen and simulated revenue. This indicates that increasing ad exposure can lead to higher revenue, reinforcing the importance of strategic ad placement and frequency.
 
 ## Conclusion
-- Reflect on the project's goals and what was achieved through the analysis.
-- Discuss any limitations encountered and opportunities for further exploration or refinement.
 
+This project successfully achieved its objectives by providing a comprehensive analysis of ad exposure's impact on conversion rates and simulated revenue. The key findings offer valuable insights for making data-driven business decisions to optimize marketing strategies.
 
-Business Insights Interpretation
-1. Relationship Between Total Ads Seen and Simulated Revenue
-Based on our analysis, we observed a [strong/weak/moderate] positive correlation between the number of ads seen by users and the simulated revenue generated. The Pearson correlation coefficient of X suggests that as the number of ads seen increases, there is a tendency for simulated revenue to increase as well.
+**Project Goals**:
+The primary goal of evaluating the impact of ad exposure on conversion rates and simulated revenue was achieved. The analysis demonstrated that ad exposure significantly influenced both conversion rates and revenue generation.
 
-3. Optimization Opportunities
-Ad Exposure Strategy: Given the positive correlation between ad exposure and revenue, optimizing ad delivery to increase user exposure could potentially lead to higher revenue generation. which could inform decisions on ad placement strategies or budget allocation in advertising campaigns.
+Additionally, through this project, I have:
 
-Targeting Strategies: Understanding how different segments respond to ad exposure can inform targeted marketing strategies. For instance, focusing on high-value segments that show a stronger correlation between ads seen and revenue can optimize marketing ROI.
+- 🎯 Enhanced my proficiency in analyzing A/B test datasets, understanding the importance of control and test groups, and applying statistical methods to assess the significance of experimental results.
+- 💰 Practiced simulating revenue data based on conversion metrics, creating a tangible financial aspect to the analysis and generating actionable business insights.
+- 📊 Improved my ability to perform and interpret various statistical tests, such as Shapiro-Wilk, Levene's, t-tests, and Mann-Whitney U tests, to compare groups and evaluate the assumptions of these tests.
+- 🔍 Sharpened my skills in transforming complex data into actionable insights, aiding in making informed decisions about ad placement strategies and budget allocation in advertising campaigns.
+- 📈 Demonstrated proficiency in creating impactful data visualizations using Python packages like Matplotlib and Seaborn, effectively communicating the analysis results.
 
-4. Conversion and Revenue Alignment
-The AB testing results also indicated that users exposed to ads (compared to those exposed to PSA) showed higher conversion rates and, consequently, higher simulated revenue. This alignment reinforces the importance of effective ad campaign management in driving both conversion and revenue outcomes.
+**Limitations**:
+- The simulated revenue model, while insightful, is based on assumptions and simplifications that may not capture all real-world complexities.
+- The analysis is limited to the dataset provided and may not be generalizable to other datasets or contexts without further validation.
+- There is a lack of industry standards or historical data for comparison. Additionally, the dataset does not include user demographics, engagement metrics, or ad characteristics, which would be valuable for more comprehensive analysis.
 
-limitations: the revenue was simulated, don't have industry standards or company history to compare to, need stuff like this 1. **User Demographics:** Age, gender, location.
-2. **Engagement Metrics:** Number of sessions, session duration.
-3. **Ad Characteristics:** Type of ad, ad placement, ad frequency.
-
-6. Future Considerations
-   multiple linear regression, tests to say how revenue is affected by day of the week or time of day
-Further Testing: Continual testing and iteration of ad exposure strategies are recommended to refine targeting and maximize revenue potential.
-
-Segmentation Strategies: Exploring deeper into user segmentation based on behavior and response to ad exposure can uncover more nuanced insights for personalized marketing approaches.
-
-Conclusion
-In conclusion, optimizing ad exposure based on our findings can lead to significant improvements in revenue generation. By leveraging insights into the relationship between ad exposure and revenue, we can refine our strategies to better meet user expectations and business objectives.
-
-------
-
-# A/B Testing Analysis Project README
-
-## Overview
-This project aims to conduct an A/B testing analysis to evaluate the effectiveness of an advertising campaign in increasing user conversion rates. The analysis focuses on comparing two groups: one exposed to advertisements (experimental group) and another exposed to Public Service Announcements (PSAs) or no exposure (control group). The primary goal is to determine if there is a statistically significant difference in conversion rates between these groups.
-
-## Data Description
-The dataset used in this analysis includes the following variables:
-- **test group**: Indicates whether users were in the experimental (ad exposure) or control (PSA/no exposure) group.
-- **converted**: Binary variable indicating if the user converted (True) or did not convert (False).
-- **total ads**: Number of ads each user was exposed to during the campaign.
-- **most ads day**: Day of the week when the user saw the most ads.
-- **most ads hour**: Hour of the day when the user saw the most ads.
-
-## Project Structure
-1. **Data Preprocessing**
-   - Cleaned and prepared the dataset, handling missing values and ensuring data integrity.
-   - Converted categorical variables into appropriate formats for analysis.
-
-2. **Exploratory Data Analysis**
-   - Conducted univariate analysis to understand the distribution of variables.
-   - Visualized relationships between variables using histograms, bar plots, and scatter plots.
-
-3. **Hypothesis Testing**
-   - **Assumptions Check:**
-     - Tested for normality and equality of variances using Shapiro-Wilk and Levene's tests.
-   - **Statistical Tests:**
-     - Used independent two-sample t-tests to compare conversion rates between the experimental and control groups.
-     - Applied non-parametric Mann-Whitney U tests as alternatives when assumptions for t-tests were not met.
-
-4. **Simulated Revenue Analysis**
-   - **Data Transformation:**
-     - Simulated a `simulated_revenue` column based on conversion status and total ads exposure.
-   - **Revenue Analysis:**
-     - Analyzed the distribution and statistical significance of simulated revenue differences between converted and non-converted groups.
-
-5. **Insights and Interpretation**
-   - Summarized findings from the A/B testing and simulated revenue analyses.
-   - Interpreted results to derive theoretical business insights, including implications for marketing strategies and revenue generation.
-
-## Conclusion
-- Concluded with insights into the effectiveness of the advertising campaign based on statistical evidence.
-- Discussed limitations of the analysis and suggestions for future research or improvements.
-
-## Visualizations and Code
-- Included visualizations such as histograms, box plots, and statistical tests' output.
-- Provided snippets of Python code used for data preprocessing, analysis, and visualization.
-
-## Future Steps
-- Suggested next steps for further exploring the data or refining the analysis methodology.
-- Proposed additional experiments or data collection efforts to strengthen the analysis conclusions.
+**Future Steps**:
+- Collect additional data, including user demographics, engagement metrics, and ad characteristics, to enable more detailed analysis.
+- Perform regression analysis to further investigate the relationships between variables and to identify key drivers of conversion and revenue.
+- Compare the findings with industry benchmarks and historical data to validate the results and refine the analysis.
 
 ## Acknowledgments
-This project was inspired by a YouTube tutorial on analyzing A/B testing data. While the initial analysis approach followed the tutorial, additional visualizations and a simulated revenue column were added to further explore the dataset and derive business insights.
-
-Tutorial Link: YouTube - Analyzing A/B Testing Data
-
-## Future Steps
-- Outline potential next steps for enhancing the analysis or applying findings in real-world scenarios.
-- Consider additional experiments or refinements to improve the accuracy and reliability of results.
-
+This project was inspired by a [YouTube tutorial](https://www.youtube.com/watch?v=AQC7b68H7LU) on analyzing A/B testing data. While the initial analysis approach followed the tutorial, additional visualizations and a simulated revenue column were added to further explore the dataset and derive business insights.

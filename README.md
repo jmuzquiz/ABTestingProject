@@ -1,28 +1,6 @@
 # A/B Testing Analysis
 
 ## Table of Contents
-1. [Introduction](#introduction)
-2. [Background](#background)
-   - [Dataset Source](#dataset-source)
-   - [Dataset Description](#dataset-description)
-3. [Google Colab Notebook](#google-colab-notebook)
-4. [Project Overview](#project-overview)
-   - [Objectives](#objectives)
-   - [Statistical Tools](#statistical-tools)
-5. [Project Structure](#project-structure)
-   - [Data Preprocessing](#data-preprocessing)
-   - [Univariate Analysis](univariate-analysis)
-   - [Bivariate Analysis](#bivariate-analysis)
-   - [Statistical Tests](#statistical-tests)
-   - [Simulated Revenue Analysis](#simulated-revenue-analysis)
-6. [Insights and Interpretations](insights-and-interpretations)
-7. [Conclusion](conclusion)
-   - [Project Goals](project-goals)
-   - [Limitations](limitations)
-   - [Future Steps](future-steps)
-8. [Acknowledgements](acknowledgments)
-
-## Table of Contents
 - [Introduction](#introduction)
 - [Background](#background)
   - [Dataset Source](#dataset-source)

@@ -733,7 +733,7 @@ Based on the results of the A/B testing analysis, several key insights were unco
 ## Conclusion
 This project successfully achieved its objectives by providing a comprehensive analysis of ad exposure's impact on conversion rates and simulated revenue. The key findings offer valuable insights for making data-driven business decisions to optimize marketing strategies.
 
-**Project Goals**:
+#### Project Goals:
 The primary goal of evaluating the impact of ad exposure on conversion rates and simulated revenue was achieved. The analysis demonstrated that ad exposure significantly influenced both conversion rates and revenue generation.
 
 Additionally, through this project, I have:
@@ -744,15 +744,15 @@ Additionally, through this project, I have:
 - 🔍 Sharpened my skills in transforming complex data into actionable insights, aiding in making informed decisions about ad placement strategies and budget allocation in advertising campaigns.
 - 📈 Demonstrated proficiency in creating impactful data visualizations using Python packages like Matplotlib and Seaborn, effectively communicating the analysis results.
 
-**Limitations**:
+#### Limitations:
 - The simulated revenue model, while insightful, is based on assumptions and simplifications that may not capture all real-world complexities.
 - The analysis is limited to the dataset provided and may not be generalizable to other datasets or contexts without further validation.
 - There is a lack of industry standards or historical data for comparison. Additionally, the dataset does not include user demographics, engagement metrics, or ad characteristics, which would be valuable for more comprehensive analysis.
 
-**Future Steps**:
+#### Future Steps:
 - Collect additional data, including user demographics, engagement metrics, and ad characteristics, to enable more detailed analysis.
 - Perform regression analysis to further investigate the relationships between variables and to identify key drivers of conversion and revenue.
 - Compare the findings with industry benchmarks and historical data to validate the results and refine the analysis.
 
-## Acknowledgments
+## Acknowledgements
 This project was inspired by a [YouTube tutorial](https://www.youtube.com/watch?v=AQC7b68H7LU) on analyzing A/B testing data. While the initial analysis approach followed the tutorial, additional visualizations and a simulated revenue column were added to further explore the dataset and derive business insights.

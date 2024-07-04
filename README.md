@@ -15,12 +15,12 @@
    - [Bivariate Analysis](#3-bivariate-analysis)
    - [Statistical Tests](#4-statistical-tests)
    - [Simulated Revenue Analysis](#5-simulated-revenue-analysis)
-7. [Insights and Interpretations](insights-and-interpretations)
-8. [Conclusion](conclusion)
+6. [Insights and Interpretations](insights-and-interpretations)
+7. [Conclusion](conclusion)
    - [Project Goals](project-goals)
    - [Limitations](limitations)
    - [Future Steps](future-steps)
-9. [Acknowledgements](acknowledgments)
+8. [Acknowledgements](acknowledgments)
 
 ## Introduction
 📊 Dive into the world of A/B testing analysis with this project! We're exploring how different user exposures—ads versus PSAs—affect conversion rates and simulated revenue. Join me in analyzing the data to derive meaningful insights that drive strategic business decisions.

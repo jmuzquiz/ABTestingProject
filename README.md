@@ -12,9 +12,9 @@
 5. [Project Structure](#project-structure)
    - [Data Preprocessing](#1-data-preprocessing)
    - [Univariate Analysis](#2-univariate-analysis)
-   - [Bivariate Analysis](bivariate-analysis)
-   - [Statistical Tests](statistical-tests)
-   - [Simulated Revenue Analysis](simulated-revenue-analysis)
+   - [Bivariate Analysis](#3-bivariate-analysis)
+   - [Statistical Tests](#4-statistical-tests)
+   - [Simulated Revenue Analysis](#5-simulated-revenue-analysis)
 7. [Insights and Interpretations](insights-and-interpretations)
 8. [Conclusion](conclusion)
    - [Project Goals](project-goals)
@@ -106,7 +106,7 @@ for i in df_cat.columns:
   print(i.upper(), ":", df_cat[i].unique()) #gets us column names and the unique values
 ```
 
-2. #### Univariate Analysis
+ #### 2. Univariate Analysis
 
    - **Test Group**: 
      - Created a count plot and pie chart for `test group`.
@@ -291,7 +291,7 @@ plt.tight_layout()
 #show the plots
 plt.show()
 ```
-3. #### Bivariate Analysis
+ #### 3. Bivariate Analysis
 
    - **Test Group vs Converted**: 
      - Investigated the relationship between `test group` and `converted`.

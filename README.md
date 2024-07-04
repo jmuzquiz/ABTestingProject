@@ -10,16 +10,17 @@
    - [Objectives](#objectives)
    - [Statistical Tools](#statistical-tools)
 5. [Project Structure](#project-structure)
+   - [Data Preprocessing](data-preprocessing)
    - [Univariate Analysis](univariate-analysis)
    - [Bivariate Analysis](bivariate-analysis)
    - [Statistical Tests](statistical-tests)
    - [Simulated Revenue Analysis](simulated-revenue-analysis)
-6. [Insights and Interpretations](insights-and-interpretations)
-7. [Conclusion](conclusion)
+7. [Insights and Interpretations](insights-and-interpretations)
+8. [Conclusion](conclusion)
    - [Project Goals](project-goals)
    - [Limitations](limitations)
    - [Future Steps](future-steps)
-8. [Acknowledgements](acknowledgments)
+9. [Acknowledgements](acknowledgments)
 
 ## Introduction
 📊 Dive into the world of A/B testing analysis with this project! We're exploring how different user exposures—ads versus PSAs—affect conversion rates and simulated revenue. Join me in analyzing the data to derive meaningful insights that drive strategic business decisions.
@@ -68,7 +69,7 @@ For my A/B testing analysis project, I utilized the following tools and platform
 This project enabled me to leverage my proficiency in Python programming, collaborative tools like Google Colab and GitHub, and essential data analysis and visualization libraries. These tools were instrumental in conducting rigorous A/B testing analysis and deriving meaningful insights from the dataset.
 
 ## Project Structure
- #### **Data Preprocessing**
+1.  #### Data Preprocessing
    - **Loading the Libraries**: Necessary libraries for data manipulation and analysis were imported.
    - **Loading the Data**: The dataset was loaded from the provided source into a pandas DataFrame.
    - **Dropping Unnecessary Columns**: Dropped the `Unnamed: 0` column as it is just a row index and does not contribute to the analysis. Also dropped the `user id` column after confirming there were no duplicate user IDs.
@@ -105,7 +106,7 @@ for i in df_cat.columns:
   print(i.upper(), ":", df_cat[i].unique()) #gets us column names and the unique values
 ```
 
-2. #### **Univariate Analysis**
+2. #### Univariate Analysis
 
    - **Test Group**: 
      - Created a count plot and pie chart for `test group`.
@@ -290,7 +291,7 @@ plt.tight_layout()
 #show the plots
 plt.show()
 ```
-3. #### **Bivariate Analysis**
+3. #### Bivariate Analysis
 
    - **Test Group vs Converted**: 
      - Investigated the relationship between `test group` and `converted`.

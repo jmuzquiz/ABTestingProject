@@ -10,7 +10,7 @@
    - [Objectives](#objectives)
    - [Statistical Tools](#statistical-tools)
 5. [Project Structure](#project-structure)
-   - [Data Preprocessing](data-preprocessing)
+   - [Data Preprocessing](#1-data-preprocessing)
    - [Univariate Analysis](univariate-analysis)
    - [Bivariate Analysis](bivariate-analysis)
    - [Statistical Tests](statistical-tests)
@@ -69,7 +69,7 @@ For my A/B testing analysis project, I utilized the following tools and platform
 This project enabled me to leverage my proficiency in Python programming, collaborative tools like Google Colab and GitHub, and essential data analysis and visualization libraries. These tools were instrumental in conducting rigorous A/B testing analysis and deriving meaningful insights from the dataset.
 
 ## Project Structure
-1.  #### Data Preprocessing
+  #### 1. Data Preprocessing
    - **Loading the Libraries**: Necessary libraries for data manipulation and analysis were imported.
    - **Loading the Data**: The dataset was loaded from the provided source into a pandas DataFrame.
    - **Dropping Unnecessary Columns**: Dropped the `Unnamed: 0` column as it is just a row index and does not contribute to the analysis. Also dropped the `user id` column after confirming there were no duplicate user IDs.

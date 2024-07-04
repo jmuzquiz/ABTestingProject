@@ -10,11 +10,11 @@
    - [Objectives](#objectives)
    - [Statistical Tools](#statistical-tools)
 5. [Project Structure](#project-structure)
-   - [1. Data Preprocessing](#1-data-preprocessing)
-   - [2. Univariate Analysis](#2-univariate-analysis)
-   - [3. Bivariate Analysis](#3-bivariate-analysis)
-   - [4. Statistical Tests](#4-statistical-tests)
-   - [5. Simulated Revenue Analysis](#5-simulated-revenue-analysis)
+   - [Data Preprocessing](#data-preprocessing)
+   - [Univariate Analysis](univariate-analysis)
+   - [Bivariate Analysis](#bivariate-analysis)
+   - [Statistical Tests](#statistical-tests)
+   - [Simulated Revenue Analysis](#simulated-revenue-analysis)
 6. [Insights and Interpretations](insights-and-interpretations)
 7. [Conclusion](conclusion)
    - [Project Goals](project-goals)
@@ -69,7 +69,7 @@ For my A/B testing analysis project, I utilized the following tools and platform
 This project enabled me to leverage my proficiency in Python programming, collaborative tools like Google Colab and GitHub, and essential data analysis and visualization libraries. These tools were instrumental in conducting rigorous A/B testing analysis and deriving meaningful insights from the dataset.
 
 ## Project Structure
-  #### 1. Data Preprocessing
+  #### Data Preprocessing
    - **Loading the Libraries**: Necessary libraries for data manipulation and analysis were imported.
    - **Loading the Data**: The dataset was loaded from the provided source into a pandas DataFrame.
    - **Dropping Unnecessary Columns**: Dropped the `Unnamed: 0` column as it is just a row index and does not contribute to the analysis. Also dropped the `user id` column after confirming there were no duplicate user IDs.
@@ -106,7 +106,7 @@ for i in df_cat.columns:
   print(i.upper(), ":", df_cat[i].unique()) #gets us column names and the unique values
 ```
 
- #### 2. Univariate Analysis
+ #### Univariate Analysis
 
    - **Test Group**: 
      - Created a count plot and pie chart for `test group`.
@@ -291,7 +291,7 @@ plt.tight_layout()
 #show the plots
 plt.show()
 ```
- #### 3. Bivariate Analysis
+ #### Bivariate Analysis
 
    - **Test Group vs Converted**: 
      - Investigated the relationship between `test group` and `converted`.
@@ -396,7 +396,7 @@ custom_palette = {'True': 'orange', 'False': '#add8e6'}  # Light blue color code
 sns.boxplot(x = 'converted', y = 'total ads', data = df[df['total ads']<50], palette = custom_palette);
 ```
 
-#### 4. Statistical Tests
+#### Statistical Tests
 
 - **Chi-Square Tests for Categorical Variables**
   - Conducted Chi-Square tests to examine the dependency between categorical variables and conversion status.
@@ -471,7 +471,7 @@ else:
     print(f"Mann-Whitney U test: p-value = {u_p_value}")
 ```
 
-#### 5. Simulated Revenue Analysis
+#### Simulated Revenue Analysis
 
 - **Data Modification:**
   - Enhanced A/B testing analysis by integrating revenue simulation to augment the interpretation of data with actionable financial insights.
@@ -692,7 +692,6 @@ else:
     print(f"Spearman correlation coefficient: {spearman_corr:.3f}")
     print(f"Spearman correlation p-value: {spearman_p_value:.3f}")
 ```
-
 ## Insights and Interpretations
 Based on the results of the A/B testing analysis, several key insights were uncovered that can guide strategic business decisions:
 

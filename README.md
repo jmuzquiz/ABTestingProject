@@ -8,7 +8,7 @@
 3. [Google Colab Notebook](#google-colab-notebook)
 4. [Project Overview](#project-overview)
    - [Objectives](#objectives)
-   - [Tools I Used](#tools-i-used)
+   - [Statistical Tools](#statistical-tools)
 5. [Project Structure](#project-structure)
    - [Univariate Analysis](univariate-analysis)
    - [Bivariate Analysis](bivariate-analysis)
@@ -39,7 +39,6 @@ The dataset contains the following columns:
 - `most ads hour`: Hour of the day when the user viewed the highest number of advertisements
 
 ## Google Colab Notebook
-
 This [notebook](https://colab.research.google.com/drive/1muq9hceFyo-QxPNSdx73RmRMHxetpAIe?usp=drive_link) contains the Python code used for the A/B testing analysis in this project. 
 
 The notebook includes data preprocessing steps, visualizations, statistical analysis, and simulations related to evaluating the effectiveness of advertising campaigns using A/B testing.
@@ -56,7 +55,7 @@ This project focuses on conducting an A/B testing analysis to evaluate the impac
 6. Analyze simulated revenue differences between users who converted and those who did not, differentiating by test group (ads vs PSA) and varying levels of total ads seen.
 7. Evaluate the overall impact and effectiveness of the ad campaign, comparing revenue from ads versus PSA and examining the relationship between total ads seen and revenue.
 
-### Tools I Used
+### Statistical Tools
 For my A/B testing analysis project, I utilized the following tools and platforms:
 
 - **Python**: Used extensively for data preprocessing, statistical analysis, and creating visualizations.
@@ -74,7 +73,7 @@ This project enabled me to leverage my proficiency in Python programming, collab
    - **Loading the Data**: The dataset was loaded from the provided source into a pandas DataFrame.
    - **Dropping Unnecessary Columns**: Dropped the `Unnamed: 0` column as it is just a row index and does not contribute to the analysis. Also dropped the `user id` column after confirming there were no duplicate user IDs.
    - **Checking for Missing Values**: Verified that there were no missing values in the dataset.
-   - **Variable Types and Levels**: Identified the types of variables in the dataset, primarily categorical with one numerical variable. `converted` is a boolean variable (the simplest type of categorical variable), indicating whether a user made a purchase. Despite initially appearing numerical, `most ads hour` is treated categorically with 24 distinct levels, where each hour of the day is represented (e.g., 20 corresponds to 8pm). `total ads` is the sole numerical variable, representing the count of advertisements shown to each user. Ensured categorical variables had appropriate levels (e.g., 7 levels for `most ads day`, covering each day of the week; 24 levels for `most ads hour`, spanning each hour of the day). Confirmed the correct definition of levels (e.g., no entries outside the 24-hour cycle for `most ads hour`).**edit?
+   - **Variable Types and Levels**: Identified the types of variables in the dataset, primarily categorical with one numerical variable. `converted` is a boolean variable (the simplest type of categorical variable), indicating whether a user made a purchase. Despite initially appearing numerical, `most ads hour` is treated categorically with 24 distinct levels, where each hour of the day is represented (e.g., 20 corresponds to 8pm). `total ads` is the sole numerical variable, representing the count of advertisements shown to each user. Ensured categorical variables had appropriate levels (e.g., 7 levels for `most ads day`, covering each day of the week; 24 levels for `most ads hour`, spanning each hour of the day). Confirmed the correct definition of levels (e.g., no entries outside the 24-hour cycle for `most ads hour`).
 ```python
 #import basic libraries
 import numpy as np
@@ -94,8 +93,8 @@ df.drop(['Unnamed: 0', 'user id'], axis = 1, inplace = True)
 #check for missing values
 any_missing = df.isnull().values.any()
 
-# Checking variable types and levels
-print(df.dtypes) ***check this
+#checking variable types and levels
+print(df.dtypes)
 
 #check if the categorical variables have appropriate number of levels
 df_cat = df[['test group', 'converted', 'most ads day', 'most ads hour']]
@@ -125,8 +124,8 @@ for i in df_cat.columns:
        ![Most Ads Day Plots](Graphs/most_ads_day.png)
 
    - **Most Ads Hour**: 
-     - Created a count plot (ordered from highest to lowest), a pie chart, and a chronological line plot for `most ads hour`.
-     - The pie chart was less useful due to having 24 slices, but the count plot and line plot revealed that 1 pm had the most ads shown, while 4 am had the least.
+     - Created a count plot (ordered from highest to lowest) and a chronological line plot for `most ads hour`.
+     - The count plot and line plot revealed that 1pm had the most ads shown, while 4am had the least.
      - **Objective 1 Answered**: Identified peak hours of ad exposure for users.
        ![Most Ads Hour Plots](Graphs/most_ads_hour.png)
 
@@ -231,34 +230,29 @@ plt.tight_layout()
 plt.show()
 
 #most ads hour
-variable = 'most ads hour' #which column in df_cat to visualize
+variable = 'most ads hour'  #which column in df_cat to visualize
 #define the custom color palette (adjust as needed)
-custom_palette = ['#1f77b4'] * 24  # Using a single color for all bars
-plt.figure(figsize = (9,5)) #12,6
+custom_palette = ['#1f77b4'] * 24  #using a single color for all bars
+plt.figure(figsize=(9, 5))  # 12, 6
 #count plot
-plt.subplot (2,2,1) #2 rows, 2 cols, 1st plot in 2x2, top left
-sns.countplot(x=variable, data=df_cat, palette= custom_palette, 
-              order = df_cat['most ads hour'].value_counts().index) #highest to lowest
+plt.subplot(2, 1, 1)  # 2 rows, 1 column, 1st plot
+sns.countplot(x=variable, data=df_cat, palette=custom_palette, 
+              order=df_cat['most ads hour'].value_counts().index)  #highest to lowest
 plt.title(f'Count Plot - {variable}')
-plt.xticks(rotation = 45) #rotate day names for easier reading
-#pie chart
-plt.subplot(2,2,2)
-counts = df_cat[variable].value_counts() #counts of each unique variable in column we are visualizing
-colors = [custom_palette[label] for label in counts.index]
-plt.pie(counts, labels = counts.index, autopct = '%0.2f%%', colors = colors) #percentage with 2 decimal places
-plt.title(f'Pie Chart - {variable}')
+plt.xticks(rotation=45)  #rotate hour names for easier reading
 #line plot
-plt.subplot (2,1,2) #2 rows, 1 column in, 2 (bottom row)
+plt.subplot(2, 1, 2)  # 2 rows, 1 column, 2nd plot
 sns.lineplot(x=range(24), y=df_cat.groupby(variable).size(), marker='o', color='#1f77b4')
 plt.title(f'Count of Ads by Hour of the Day')
 plt.xlabel('Hour of the Day')
 plt.ylabel('Count')
-# Customize x-axis ticks and labels
+#customize x-axis ticks and labels
 plt.xticks(range(24), labels=[str(i) for i in range(24)], rotation=45)
 #adjust layout
 plt.tight_layout()
 #show the plots
 plt.show()
+
 
 #total ads
 variable = 'total ads' #the only numerical variable
@@ -399,7 +393,6 @@ sns.boxplot(x = 'converted', y = 'total ads', data = df);
 #define the custom color palette
 custom_palette = {'True': 'orange', 'False': '#add8e6'}  # Light blue color code
 sns.boxplot(x = 'converted', y = 'total ads', data = df[df['total ads']<50], palette = custom_palette);
-
 ```
 
 #### 4. Statistical Tests
@@ -436,52 +429,43 @@ sns.boxplot(x = 'converted', y = 'total ads', data = df[df['total ads']<50], pal
   - **Objective 5 Answered**: Explored how the number of ads seen influenced conversion likelihood.
 
 ```python
-#Chi-Square Tests for Categorical Variables
+#Chi-Square tests for categorical variables
 from scipy.stats import chi2_contingency
-
 alpha = 0.05
 for variable in df_cat.columns:
     if variable != 'converted':  # Don't want to see converted relationship with itself
-        #Create a contingency table (cross-tabulation)
+        #create a contingency table (cross-tabulation)
         contingency_table = pd.crosstab(df_cat[variable], df_cat['converted'])
-
-        #Perform Chi-Square test
+        #perform Chi-Square test
         chi2, p, _, _ = chi2_contingency(contingency_table)
-
-        #Display the results
+        #display the results
         print(f"\nChi-Squared test for {variable} vs. converted:")
         print(f"Chi-Squared value: {chi2}")
         print(f"p-value: {p}")
-
-        #Check for significance
+        #check for significance
         if p < alpha:
             print(f"The difference in conversion rates across {variable} is statistically significant.")
         else:
             print(f"There is no significant difference in conversion rates across {variable}.")
 
-#Tests for Continuous Variable (Total Ads)
+#tests for continuous variable (total ads)
 from scipy.stats import shapiro, levene, ttest_ind, mannwhitneyu
-
 #Shapiro-Wilk test for normality
 shapiro_stat_true, shapiro_p_value_true = shapiro(df[df['converted'] == True]['total ads'])
 shapiro_stat_false, shapiro_p_value_false = shapiro(df[df['converted'] == False]['total ads'])
-
 print(f"Shapiro-Wilk test for normality (True group): p-value = {shapiro_p_value_true}")
 print(f"Shapiro-Wilk test for normality (False group): p-value = {shapiro_p_value_false}")
-
 #Levene's test for equality of variances
 levene_stat, levene_p_value = levene(df[df['converted']]['total ads'], df[~df['converted']]['total ads'])
 print(f"Levene's test for equality of variances: p-value = {levene_p_value}")
-
-#Perform suitable test based on assumptions
+#perform suitable test based on assumptions
 alpha = 0.05
-
 if shapiro_p_value_true > alpha and shapiro_p_value_false > alpha and levene_p_value > alpha:
-    #Assumptions met - use t-test for means
+    #assumptions met - use t-test for means
     t_stat, t_p_value = ttest_ind(df[df['converted']]['total ads'], df[~df['converted']]['total ads'])
     print(f"Independent two-sample t-test: p-value = {t_p_value}")
 else:
-    #Assumptions not met - use Mann-Whitney U test for medians (nonparametric)
+    #assumptions not met - use Mann-Whitney U test for medians (nonparametric)
     u_stat, u_p_value = mannwhitneyu(df[df['converted']]['total ads'], df[~df['converted']]['total ads'])
     print(f"Mann-Whitney U test: p-value = {u_p_value}")
 ```
@@ -500,14 +484,19 @@ else:
 - **Bivariate Analysis:**
   
    - **Simulated Revenue vs Converted**: 
-     - Investigated the relationship between `simulated_revenue` and `converted` through the creation of a histogram.
+     - Investigated the relationship between `simulated_revenue` and `converted` through the creation of histograms.
      - Due to skewness, the data was difficult to visualize, so descriptive statistics were examined.
-     - Decided to focus on entries where the simulated revenue was less than $350 for better visualization.
+     - Noticed that zeros were not showing up clearly for non-converted users in the combined histogram.
+     - Decided to separate the histograms for non-converted and converted users for better visualization:
+       - A histogram for non-converted users appropriately showed a high frequency of zero revenue.
+       - A histogram for converted users was filtered to focus on entries with simulated revenue less than $350, based on examining descriptive statistics, to improve visual clarity and focus on the majority of the data.
      - Without these outliers, the average simulated revenue for converted users was $212.
-       #### Original Visualization
+       #### Original Visualization of Both Converted and Non-Converted
        ![Histogram of Simulated Revenue vs Converted](Graphs/simulated_revenue_converted.png)
-       #### Refined Visualization (Revenue less than $350)
-       ![Histogram of Simulated Revenue vs Converted Filtered](Graphs/simulated_revenue_converted_filtered.png)
+       #### Non-Converted User Visualization
+       ![Histogram of Simulated Revenue vs Non-Converted](Graphs/simulated_revenue_non_converted_only.png)
+       #### Converted User Visualization (Filtered for Revenue less than $350)
+       ![Histogram of Simulated Revenue vs Converted Filtered](Graphs/simulated_revenue_converted_only_filtered.png)
        
    - **Simulated Revenue vs Test Group**: 
      - Investigated the relationship between `simulated_revenue` and `test group` through the creation of a boxplot.
@@ -560,13 +549,31 @@ else:
       - **Objective 6 and 7 Answered**: Analyzed simulated revenue differences between varying levels of total ads seen. Increased ad exposure lead to higher simulated revenue, as was suggested by the scatterplot of `simulated_revenue` and `total ads` highlighted in the previous section, and is indicative of ad campaign success.
 
 ```python
-import matplotlib.pyplot as plt
-import seaborn as sns
+#data modification
+#simulated revenue
+#set a random seed for reproducibility
+np.random.seed(45)
+#define revenue parameters
+fixed_revenue_per_conversion = 100
+variable_revenue_per_ad = 2
+#calculate simulated_revenue based on conversion status and total ads seen
+df['simulated_revenue'] = df.apply(
+    lambda row: fixed_revenue_per_conversion + (variable_revenue_per_ad * row['total ads']) if row['converted'] else 0,
+    axis=1
+)
 
-# Set the figure size for all plots
+#calculate total earnings based on conversion status
+total_earnings_converted = df[df['converted']]['simulated_revenue'].sum()
+total_earnings_not_converted = df[~df['converted']]['simulated_revenue'].sum()
+#summary of total earnings
+print(f"Total earnings from converted users: ${total_earnings_converted:.2f}")
+print(f"Total earnings from non-converted users: ${total_earnings_not_converted:.2f}")
+
+#set the figure size for all plots
 plt.figure(figsize=(8, 6))
 
-# Histogram for overall simulated revenue
+#univariate analysis
+#histogram for overall simulated revenue
 plt.hist(df['simulated_revenue'], bins=30, edgecolor='black')
 plt.xlabel('Simulated Revenue')
 plt.ylabel('Frequency')
@@ -574,7 +581,8 @@ plt.title('Distribution of Simulated Revenue (All Users)')
 plt.grid(True)
 plt.show()
 
-# Histogram for simulated revenue by conversion status
+#bivariate analysis
+#histogram for simulated revenue by conversion status
 plt.figure(figsize=(8, 6))
 plt.hist(df[df['converted']]['simulated_revenue'], bins=30, alpha=0.5, color='blue', label='Converted')
 plt.hist(df[~df['converted']]['simulated_revenue'], bins=30, alpha=0.5, color='red', label='Not Converted')
@@ -583,22 +591,30 @@ plt.ylabel('Frequency')
 plt.title('Histogram of Simulated Revenue by Conversion Status')
 plt.legend()
 plt.grid(True)
+#plt.savefig('simulated_revenue_converted.png')
 plt.show()
 
-# Histogram for simulated revenue filtered by conversion status and revenue < 350
+#separate plot for non-converted
 plt.figure(figsize=(8, 6))
-plt.hist(df[(df['simulated_revenue'] < 350) & df['converted']]['simulated_revenue'], bins=30, alpha=0.5, color='blue', label='Converted')
-plt.hist(df[(df['simulated_revenue'] < 350) & ~df['converted']]['simulated_revenue'], bins=30, alpha=0.5, color='red', label='Not Converted')
-# Apply frequency filter
-plt.ylim(0, 1000)
+plt.hist(df[~df['converted']]['simulated_revenue'], bins=30, alpha=0.5, color='red', edgecolor='black')
 plt.xlabel('Simulated Revenue')
 plt.ylabel('Frequency')
-plt.title('Distribution of Simulated Revenue (Revenue < 350)')
-plt.legend()
+plt.title('Histogram of Simulated Revenue (Not Converted)')
 plt.grid(True)
 plt.show()
 
-# Boxplot of simulated revenue by exposure group
+#separate plot for converted with filters
+plt.figure(figsize=(8, 6))
+filtered_data = df[(df['simulated_revenue'] < 350) & (df['converted'])]
+plt.hist(filtered_data['simulated_revenue'], bins=30, alpha=0.5, color='blue', edgecolor='black')
+plt.ylim(0, 1000)
+plt.xlabel('Simulated Revenue')
+plt.ylabel('Frequency')
+plt.title('Histogram of Simulated Revenue (Converted) - Filtered')
+plt.grid(True)
+plt.show()
+
+#boxplot of simulated revenue by exposure group
 plt.figure(figsize=(8, 6))
 sns.boxplot(x='test group', y='simulated_revenue', data=df, palette=['green', 'orange'])
 plt.xlabel('Test Group')
@@ -607,7 +623,7 @@ plt.title('Boxplot of Simulated Revenue by Exposure Group')
 plt.grid(True)
 plt.show()
 
-# Scatter plot of total ads vs simulated revenue
+#scatterplot of total ads vs simulated revenue
 plt.figure(figsize=(8, 6))
 sns.scatterplot(x='total ads', y='simulated_revenue', data=df)
 plt.title('Total Ads vs Simulated Revenue')
@@ -616,86 +632,54 @@ plt.ylabel('Simulated Revenue')
 plt.grid(True)
 plt.show()
 
-#simulate revenue
-# Set a random seed for reproducibility
-np.random.seed(45)
-
-# Define revenue parameters
-fixed_revenue_per_conversion = 100
-variable_revenue_per_ad = 2
-
-# Calculate simulated_revenue based on conversion status and total ads seen
-df['simulated_revenue'] = df.apply(
-    lambda row: fixed_revenue_per_conversion + (variable_revenue_per_ad * row['total ads']) if row['converted'] else 0,
-    axis=1
-)
-
-# Calculate total earnings based on conversion status
-total_earnings_converted = df[df['converted']]['simulated_revenue'].sum()
-total_earnings_not_converted = df[~df['converted']]['simulated_revenue'].sum()
-
-# Summary of total earnings
-print(f"Total earnings from converted users: ${total_earnings_converted:.2f}")
-print(f"Total earnings from non-converted users: ${total_earnings_not_converted:.2f}")
-
 ###statistical tests
 #simulated revenue vs converted
-# Step 1: Check assumptions
-# Normality assumption (Shapiro-Wilk test)
+#atep 1: check assumptions
+#normality assumption (Shapiro-Wilk test)
 shapiro_stat_true, shapiro_p_value_true = shapiro(df[df['converted'] == True]['simulated_revenue'])
 shapiro_stat_false, shapiro_p_value_false = shapiro(df[df['converted'] == False]['simulated_revenue'])
-
 print(f"Shapiro-Wilk test for normality (True group): p-value = {shapiro_p_value_true}")
 print(f"Shapiro-Wilk test for normality (False group): p-value = {shapiro_p_value_false}")
-
-# Equality of variances assumption (Levene's test)
+#equality of variances assumption (Levene's test)
 levene_stat, levene_p_value = levene(df[df['converted']]['simulated_revenue'], df[~df['converted']]['simulated_revenue'])
 print(f"Levene's test for equality of variances: p-value = {levene_p_value}")
-
-# Step 2: Perform a suitable test
-alpha = 0.05  # Adjust alpha based on your significance level
-
+#step 2: perform a suitable test
+alpha = 0.05  #adjust alpha based on your significance level
 if shapiro_p_value_true > alpha and shapiro_p_value_false > alpha and levene_p_value > alpha:
-    # Assumptions met - use t-test for means
+    #assumptions met - use t-test for means
     t_stat, t_p_value = ttest_ind(df[df['converted']]['simulated_revenue'], df[~df['converted']]['simulated_revenue'])
     print(f"Independent two-sample t-test: p-value = {t_p_value}")
 else:
-    # Assumptions not met - use Mann-Whitney U test for medians (nonparametric)
+    #assumptions not met - use Mann-Whitney U test for medians (nonparametric)
     u_stat, u_p_value = mannwhitneyu(df[df['converted']]['simulated_revenue'], df[~df['converted']]['simulated_revenue'])
     print(f"Mann-Whitney U test: p-value = {u_p_value}")
 
 #simulated revenue vs test group
-# Step 1: Check assumptions
-# Normality assumption (Shapiro-Wilk test)
+#step 1: check assumptions
+#normality assumption (Shapiro-Wilk test)
 shapiro_stat_ad, shapiro_p_value_ad = shapiro(df[df['test group'] == 'ad']['simulated_revenue'])
 shapiro_stat_psa, shapiro_p_value_psa = shapiro(df[df['test group'] == 'psa']['simulated_revenue'])
-
 print(f"Shapiro-Wilk test for normality (ad group): p-value = {shapiro_p_value_ad}")
 print(f"Shapiro-Wilk test for normality (psa group): p-value = {shapiro_p_value_psa}")
-
-# Equality of variances assumption (Levene's test)
+#equality of variances assumption (Levene's test)
 levene_stat, levene_p_value = levene(df[df['test group'] == 'ad']['simulated_revenue'], df[df['test group'] == 'psa']['simulated_revenue'])
 print(f"Levene's test for equality of variances: p-value = {levene_p_value}")
-
-# Step 2: Perform a suitable test
-alpha = 0.05  # Adjust alpha based on your significance level
-
+#step 2: perform a suitable test
+alpha = 0.05  #adjust alpha based on your significance level
 if shapiro_p_value_ad > alpha and shapiro_p_value_psa > alpha and levene_p_value > alpha:
-    # Assumptions met - use t-test for means
+    #assumptions met - use t-test for means
     t_stat, t_p_value = ttest_ind(df[df['test group'] == 'ad']['simulated_revenue'], df[df['test group'] == 'psa']['simulated_revenue'])
     print(f"Independent two-sample t-test: p-value = {t_p_value}")
 else:
-    # Assumptions not met - use Mann-Whitney U test for medians (nonparametric)
+    #assumptions not met - use Mann-Whitney U test for medians (nonparametric)
     u_stat, u_p_value = mannwhitneyu(df[df['test group'] == 'ad']['simulated_revenue'], df[df['test group'] == 'psa']['simulated_revenue'])
     print(f"Mann-Whitney U test: p-value = {u_p_value}")
 
 #simulated revenue vs total ads
 from scipy.stats import pearsonr, spearmanr
-
-# Check assumptions for Pearson correlation
+#check assumptions for Pearson correlation
 shapiro_p_total_ads, _ = shapiro(df['total ads'])
 shapiro_p_revenue, _ = shapiro(df['simulated_revenue'])
-
 if shapiro_p_total_ads > 0.05 and shapiro_p_revenue > 0.05:
     # Assumptions met - use Pearson correlation
     pearson_corr, pearson_p_value = pearsonr(df['total ads'], df['simulated_revenue'])
@@ -706,12 +690,9 @@ else:
     spearman_corr, spearman_p_value = spearmanr(df['total ads'], df['simulated_revenue'])
     print(f"Spearman correlation coefficient: {spearman_corr:.3f}")
     print(f"Spearman correlation p-value: {spearman_p_value:.3f}")
-
 ```
-    edit above, change order of simulation and images, label univariate and bivariate, generally clean up spacing and hashtags
 
 ## Insights and Interpretation
-
 Based on the results of the A/B testing analysis, several key insights were uncovered that can guide strategic business decisions:
 
 1. **Peak Ad Exposure Times**: The analysis identified specific days and hours when ad exposure peaked. These time frames should be targeted for future ad campaigns to maximize user engagement and conversion rates.
@@ -727,7 +708,6 @@ Based on the results of the A/B testing analysis, several key insights were unco
 6. **Total Ads and Revenue**: A moderate positive linear relationship was found between the total number of ads seen and simulated revenue. This indicates that increasing ad exposure can lead to higher revenue, reinforcing the importance of strategic ad placement and frequency.
 
 ## Conclusion
-
 This project successfully achieved its objectives by providing a comprehensive analysis of ad exposure's impact on conversion rates and simulated revenue. The key findings offer valuable insights for making data-driven business decisions to optimize marketing strategies.
 
 **Project Goals**:

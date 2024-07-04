@@ -11,7 +11,7 @@
    - [Statistical Tools](#statistical-tools)
 5. [Project Structure](#project-structure)
    - [Data Preprocessing](#1-data-preprocessing)
-   - [Univariate Analysis](univariate-analysis)
+   - [Univariate Analysis](#2-univariate-analysis)
    - [Bivariate Analysis](bivariate-analysis)
    - [Statistical Tests](statistical-tests)
    - [Simulated Revenue Analysis](simulated-revenue-analysis)

@@ -693,7 +693,7 @@ else:
     print(f"Spearman correlation p-value: {spearman_p_value:.3f}")
 ```
 
-## Insights and Interpretation
+## Insights and Interpretations
 Based on the results of the A/B testing analysis, several key insights were uncovered that can guide strategic business decisions:
 
 1. **Peak Ad Exposure Times**: The analysis identified specific days and hours when ad exposure peaked. These time frames should be targeted for future ad campaigns to maximize user engagement and conversion rates.

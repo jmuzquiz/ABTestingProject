@@ -551,7 +551,7 @@ else:
       - **Objective 6 and 7 Answered**: Analyzed simulated revenue differences between varying levels of total ads seen. Increased ad exposure lead to higher simulated revenue, as was suggested by the scatterplot of `simulated_revenue` and `total ads` highlighted in the previous section, and is indicative of ad campaign success.
 
 ```python
-#data modification
+###data modification
 #simulated revenue
 #set a random seed for reproducibility
 np.random.seed(45)
@@ -574,7 +574,7 @@ print(f"Total earnings from non-converted users: ${total_earnings_not_converted:
 #set the figure size for all plots
 plt.figure(figsize=(8, 6))
 
-#univariate analysis
+###univariate analysis
 #histogram for overall simulated revenue
 plt.hist(df['simulated_revenue'], bins=30, edgecolor='black')
 plt.xlabel('Simulated Revenue')
@@ -583,7 +583,7 @@ plt.title('Distribution of Simulated Revenue (All Users)')
 plt.grid(True)
 plt.show()
 
-#bivariate analysis
+###bivariate analysis
 #histogram for simulated revenue by conversion status
 plt.figure(figsize=(8, 6))
 plt.hist(df[df['converted']]['simulated_revenue'], bins=30, alpha=0.5, color='blue', label='Converted')
@@ -595,6 +595,15 @@ plt.legend()
 plt.grid(True)
 #plt.savefig('simulated_revenue_converted.png')
 plt.show()
+
+#checking summary statistics for converted users
+summary_stats_converted = df[df['converted']]['simulated_revenue'].describe()
+print(summary_stats_converted)
+#filter the DataFrame for converted users with revenue less than $350
+filtered_df = df[(df['converted']) & (df['simulated_revenue'] < 350)]
+#summary statistics for converted users with revenue less than $350
+summary_stats_converted_filtered = filtered_df['simulated_revenue'].describe()
+print(summary_stats_converted_filtered)
 
 #separate plot for non-converted
 plt.figure(figsize=(8, 6))
@@ -625,6 +634,13 @@ plt.title('Boxplot of Simulated Revenue by Exposure Group')
 plt.grid(True)
 plt.show()
 
+#total simulated revenue for PSA (control) group
+total_revenue_psa = df[df['test group'] == 'psa']['simulated_revenue'].sum()
+print("\nTotal Simulated Revenue for PSA (Control) Group: $", total_revenue_psa)
+#total simulated revenue for Ad (experimental) group
+total_revenue_ad = df[df['test group'] == 'ad']['simulated_revenue'].sum()
+print("Total Simulated Revenue for Ad (Experimental) Group: $", total_revenue_ad)
+
 #scatterplot of total ads vs simulated revenue
 plt.figure(figsize=(8, 6))
 sns.scatterplot(x='total ads', y='simulated_revenue', data=df)
@@ -636,7 +652,7 @@ plt.show()
 
 ###statistical tests
 #simulated revenue vs converted
-#atep 1: check assumptions
+#step 1: check assumptions
 #normality assumption (Shapiro-Wilk test)
 shapiro_stat_true, shapiro_p_value_true = shapiro(df[df['converted'] == True]['simulated_revenue'])
 shapiro_stat_false, shapiro_p_value_false = shapiro(df[df['converted'] == False]['simulated_revenue'])
@@ -683,12 +699,12 @@ from scipy.stats import pearsonr, spearmanr
 shapiro_p_total_ads, _ = shapiro(df['total ads'])
 shapiro_p_revenue, _ = shapiro(df['simulated_revenue'])
 if shapiro_p_total_ads > 0.05 and shapiro_p_revenue > 0.05:
-    # Assumptions met - use Pearson correlation
+    #assumptions met - use Pearson correlation
     pearson_corr, pearson_p_value = pearsonr(df['total ads'], df['simulated_revenue'])
     print(f"Pearson correlation coefficient: {pearson_corr:.3f}")
     print(f"Pearson correlation p-value: {pearson_p_value:.3f}")
 else:
-    # Assumptions not met - use Spearman correlation
+    #assumptions not met - use Spearman correlation
     spearman_corr, spearman_p_value = spearmanr(df['total ads'], df['simulated_revenue'])
     print(f"Spearman correlation coefficient: {spearman_corr:.3f}")
     print(f"Spearman correlation p-value: {spearman_p_value:.3f}")
